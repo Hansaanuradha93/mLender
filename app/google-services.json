@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "368752918900",
+    "firebase_url": "https://mlender-ca743.firebaseio.com",
+    "project_id": "mlender-ca743",
+    "storage_bucket": "mlender-ca743.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368752918900:android:47b0b1b50245be8a",
+        "android_client_info": {
+          "package_name": "com.example.hansaanuradha.mlender"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368752918900-9nkacqacm6uh944f9qenb41dj0dbht2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hansaanuradha.mlender",
+            "certificate_hash": "7529c04f2fd48bf28535c26a3105922dd072f868"
+          }
+        },
+        {
+          "client_id": "368752918900-6frnhcrr1m5h0kgtgiridchuhrh695in.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgukjE0vfaTaYx5b2yxpS1QvdAlADKTZE"
+        },
+        {
+          "current_key": "AIzaSyDgukjE0vfaTaYx5b2yxpS1QvdAlADKTZE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368752918900-6frnhcrr1m5h0kgtgiridchuhrh695in.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

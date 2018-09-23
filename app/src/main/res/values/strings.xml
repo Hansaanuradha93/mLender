@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">mLender</string>
+    <string name="mLender_password">Password</string>
+    <string name="mLender_username">Email</string>
+    <string name="mLender_button_next">Next</string>
+    <string name="mLender_button_cancel">Cancel</string>
+    <string name="signout">Sign out</string>
+    <string name="mLender_app_name">mLender</string>
+    <string name="add_transaction">Add</string>
+    <string name="add_new_transactions">Add New Transactions</string>
+    <string name="customer_list">Customer</string>
+    <string name="get_customer_list">Get Customer List</string>
+    <string name="update_transactions">Update</string>
+    <string name="update_transaction_list">Update Transactions</string>
+    <string name="to_do">To Do</string>
+    <string name="to_do_list">To Do List</string>
+</resources>
