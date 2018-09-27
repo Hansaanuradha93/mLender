@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".TransactionActivity">
 
+    <android.support.design.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:contentPadding="8dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +23,8 @@
             android:id="@+id/fullNameTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/fullNameEditText"
@@ -37,7 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/addressNoEditText"
@@ -51,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/streetEditText"
@@ -72,7 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/cityEditText"
@@ -86,7 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/stateEditText"
@@ -102,7 +113,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/phoneNoEditText"
@@ -120,7 +132,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/amountEditText"
@@ -141,7 +154,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/startDateEditText"
@@ -156,7 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/endDateEditText"
@@ -173,7 +188,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/interestRateEditText"
@@ -189,7 +205,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            android:layout_marginLeft="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <TextView
             android:id="@+id/transactionTypeTextView"
@@ -204,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="8dp">
 
             <RadioGroup
             android:layout_width="wrap_content"
@@ -232,8 +250,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_gravity="end"
-            android:text="Save"/>
+            android:text="Save"
+            style="@style/Widget.MaterialComponents.Button" />
 
     </LinearLayout>
+
+    </android.support.design.card.MaterialCardView>
 
 </ScrollView>
