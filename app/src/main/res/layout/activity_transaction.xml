@@ -135,7 +135,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contact Number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="10"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -154,7 +155,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Amount"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="7"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -176,7 +178,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Start Date"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:maxLength="10"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -192,7 +195,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="End Date"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:maxLength="10"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -210,7 +214,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Interest Rate"
-                android:inputType="number" />
+                android:inputType="numberDecimal"
+                android:maxLength="1"/>
         </android.support.design.widget.TextInputLayout>
 
 

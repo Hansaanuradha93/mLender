@@ -69,14 +69,18 @@ class MainActivity : AppCompatActivity() {
 
     fun signIn(){
         if(!emailEditText.text?.isEmpty()!! && !passwordEditText.text?.isEmpty()!!){
-            dialog?.setMessage("Sign In, please wait.");
+            // Show Dialog box
+            dialog?.setMessage("Sign In, please wait.")
             dialog?.show()
+
+            // Sign In User
             mAuth?.signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString())
                 ?.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("result", "signInWithEmail:success")
                         val user = mAuth?.getCurrentUser()
+                        // Dismiss Dialog Box
                         dialog?.dismiss()
                         updateUI()
                     } else {

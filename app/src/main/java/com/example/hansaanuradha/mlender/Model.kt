@@ -7,4 +7,4 @@ class Customer(val fName : String, val lName: String, val addressNo: String, val
 
 class Transaction(val from  : String, val startDate : Date, val initialAmount : Double, val endDate : Date,
                   val interestRate : Double, val onlyInterest : Boolean, val completed : Boolean, val remainingAmount : Double,
-                  val totalInterest : Double)
+                  val interestToRecieve : Double, val totalProfit : Double)
