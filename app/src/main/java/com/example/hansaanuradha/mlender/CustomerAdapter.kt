@@ -1,5 +1,6 @@
 package com.example.hansaanuradha.mlender
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +17,21 @@ class CustomerAdapter(options: FirestoreRecyclerOptions<Customer>) : FirestoreRe
 
     override fun onBindViewHolder(holder: CustomerViewHolder, position: Int, model: Customer) {
         holder.itemView.customerNameTextView.text = model.fname + " " + model.lname
+
+
+
     }
 }
 
 class CustomerViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
+    init{
+        view.setOnClickListener {
+            val intent = Intent(view.context, TransactionListActivity::class.java)
+            intent?.putExtra("fullname", view.customerNameTextView.text)
+            view.context.startActivity(intent)
+
+        }
+
+    }
 }

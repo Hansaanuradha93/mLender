@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -24,16 +24,4 @@
         android:text="Name"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="73dp"
-        android:background="@color/common_google_signin_btn_text_dark_focused"
-        android:textStyle="bold"
-        android:visibility="visible"
-        android:layout_marginBottom="0dp"/>
-
-
-</RelativeLayout>
+</android.support.design.card.MaterialCardView>

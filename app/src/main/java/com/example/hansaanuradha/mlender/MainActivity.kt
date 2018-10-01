@@ -23,7 +23,7 @@ import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
 
-    // Firebase Auth
+    // FireBase Auth
     private var mAuth: FirebaseAuth? = null
 
     // Progress Bar
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = mAuth?.getCurrentUser()
+        val currentUser = mAuth?.currentUser
         if(currentUser != null) {
             updateUI()
         }
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                         Log.w("result", "signInWithEmail:failure", task.exception)
                         Toast.makeText(this@MainActivity, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
+                        // Dismiss Dialog Box
                         dialog?.dismiss()
-                        //updateUI(null)
                     }
 
                     // ...

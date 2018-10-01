@@ -1,5 +1,6 @@
 package com.example.hansaanuradha.mlender
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_dash_board.*
 class DashBoardActivity : AppCompatActivity() {
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
@@ -23,6 +23,7 @@ class DashBoardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         customerCardView.setOnClickListener {
+
             val intent = Intent(this, CustomerActivity::class.java)
             startActivity(intent)
         }

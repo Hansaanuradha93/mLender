@@ -1,5 +1,6 @@
 package com.example.hansaanuradha.mlender
 
+import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,15 +10,19 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_customer.*
 
 class CustomerActivity : AppCompatActivity() {
+    // FireStore Ref
+    private var db : FirebaseFirestore ?= null
+    // FireStore Adapter
+    private var adapter : CustomerAdapter ?= null
 
-    var db : FirebaseFirestore ?= null
-    var adapter : CustomerAdapter ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer)
         setSupportActionBar(findViewById(R.id.app_bar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "CUSTOMERS"
+
+
 
         customerListRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -29,6 +34,8 @@ class CustomerActivity : AppCompatActivity() {
                 .build()
         adapter = CustomerAdapter(options)
         customerListRecyclerView.adapter = adapter
+
+
     }
 
     override fun onStart() {

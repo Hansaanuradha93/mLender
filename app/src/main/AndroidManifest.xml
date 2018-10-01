@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".DashBoardActivity" />
         <activity android:name=".CustomerActivity" />
-        <activity android:name=".TransactionActivity"></activity>
+        <activity android:name=".TransactionActivity" />
+        <activity android:name=".TransactionListActivity" />
+        <activity android:name=".TransactionDetailsActivity"></activity>
     </application>
 
 </manifest>
