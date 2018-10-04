@@ -283,14 +283,14 @@
             </RadioGroup>
         </LinearLayout>
 
-        <Button
+        <android.support.design.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_gravity="end"
             android:text="Save"
-            style="@style/Widget.MaterialComponents.Button"
             android:onClick="saveTransaction"/>
 
     </LinearLayout>

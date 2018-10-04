@@ -15,4 +15,9 @@
     <string name="to_do">To Do</string>
     <string name="to_do_list">To Do List</string>
     <string name="transaction_update">Update</string>
+    <string name="paid_amount">Amount Paid</string>
+    <string name="status">Status :</string>
+    <string name="not_completed">Not Completed</string>
+    <string name="completed">Completed</string>
+    <string name="update_transaction_button">UPDATE</string>
 </resources>

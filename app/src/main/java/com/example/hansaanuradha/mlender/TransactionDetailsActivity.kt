@@ -1,6 +1,7 @@
 package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_transaction_details.*
 import java.text.SimpleDateFormat
 import android.util.Log
+import android.view.View
 import java.util.*
 
 
@@ -23,6 +25,12 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
     // Progress Bar
     private var dialog: ProgressDialog? = null
+
+    // Fields
+    var fullName : String ?= null
+    var startDateString : String ?= null
+    var amount : Double ?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +46,28 @@ class TransactionDetailsActivity : AppCompatActivity() {
         dialog?.setMessage("Loading, please wait.")
         dialog?.show()
 
-        val fullName = intent.getStringExtra("fullname")
-        val startDateString : String = intent.getStringExtra("startDate")
-        val amount : Double = java.lang.Double.parseDouble(intent.getStringExtra("amount"))
+        fullName = intent.getStringExtra("fullname")
+        startDateString = intent.getStringExtra("startDate")
+        amount = java.lang.Double.parseDouble(intent.getStringExtra("amount"))
 
         getCustomerDetails(db, fullName)
 
         getTransactionDetails(db, fullName, startDateString, amount)
 
-        
+
     }
 
-    private fun getCustomerDetails(db : FirebaseFirestore ?= null, fullName : String){
-        customerReference = db?.collection("customers")?.document(fullName)
+    fun update(view : View){
+
+        val intent = Intent(this@TransactionDetailsActivity, TransactionUpdateActivity::class.java)
+        intent.putExtra("amount", amount)
+        intent.putExtra("fullname", fullName)
+        intent.putExtra("startDateString", startDateString)
+        startActivity(intent)
+    }
+
+    private fun getCustomerDetails(db : FirebaseFirestore ?= null, fullName : String ?= null){
+        customerReference = db?.collection("customers")?.document(fullName!!)
 
         customerReference?.get()
                 ?.addOnSuccessListener(OnSuccessListener<DocumentSnapshot>
@@ -62,7 +79,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                 })
     }
 
-    private fun getTransactionDetails(db : FirebaseFirestore ?= null, fullName : String, startDateString : String, amount : Double){
+    private fun getTransactionDetails(db : FirebaseFirestore ?= null, fullName : String ?= null, startDateString : String ?= null, amount : Double ?= null){
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
         val startDate = dateFormat.parse(startDateString)
 
@@ -116,6 +133,8 @@ class TransactionDetailsActivity : AppCompatActivity() {
                     }
                 }
     }
+
+
 
 
 }

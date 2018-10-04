@@ -20,7 +20,8 @@
         <activity android:name=".CustomerActivity" />
         <activity android:name=".TransactionActivity" />
         <activity android:name=".TransactionListActivity" />
-        <activity android:name=".TransactionDetailsActivity"></activity>
+        <activity android:name=".TransactionDetailsActivity" />
+        <activity android:name=".TransactionUpdateActivity"></activity>
     </application>
 
 </manifest>

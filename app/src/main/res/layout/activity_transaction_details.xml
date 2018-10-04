@@ -207,7 +207,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/transaction_update"
-                    android:textColor="@color/textColorBlack"/>
+                    android:textColor="@color/textColorBlack"
+                    android:onClick="update"/>
 
 
             </RelativeLayout>
