@@ -73,7 +73,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:onClick="next"
-                android:text="@string/mLender_button_next" />
+                android:text="@string/mLender_button_next"
+                android:textColor="@color/textColorBlack"/>
 
             <android.support.design.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button.TextButton"

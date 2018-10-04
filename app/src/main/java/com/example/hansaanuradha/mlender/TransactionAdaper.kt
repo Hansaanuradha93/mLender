@@ -7,13 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import kotlinx.android.synthetic.main.customer_row.view.*
 import kotlinx.android.synthetic.main.transaction_row.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 
 class TransactionAdaper(options: FirestoreRecyclerOptions<Transaction>) : FirestoreRecyclerAdapter<Transaction, TransactionViewHolder>(options) {
+    private var formatter : SimpleDateFormat ?= null
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int, model: Transaction) {
-        holder?.itemView.amountTextView.text = model.initialAmount.toString()
+
+        formatter = SimpleDateFormat("dd/M/yyyy")
+        val startDateString : String = formatter!!.format(model.startDate)
+
+        holder?.itemView.amountTextView.text = "Amount : " + model.initialAmount.toString() + "\nDate : $startDateString"
         holder?.itemView.hiddenFullName.text = model.from
+        holder?.itemView.hiddenAmount.text = model.initialAmount.toString()
+        holder?.itemView.hiddenStartDate.text = model.startDate.toString()
+
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TransactionViewHolder {
@@ -30,6 +41,8 @@ class TransactionViewHolder(view : View) : RecyclerView.ViewHolder(view){
         view.setOnClickListener {
             val intent = Intent(view.context, TransactionDetailsActivity::class.java)
             intent.putExtra("fullname", view.hiddenFullName.text)
+            intent.putExtra("amount", view.hiddenAmount.text)
+            intent.putExtra("startDate", view.hiddenStartDate.text)
             view.context.startActivity(intent)
         }
     }

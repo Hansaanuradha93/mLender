@@ -14,4 +14,5 @@
     <string name="update_transaction_list">Update Transactions</string>
     <string name="to_do">To Do</string>
     <string name="to_do_list">To Do List</string>
+    <string name="transaction_update">Update</string>
 </resources>
