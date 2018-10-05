@@ -1,19 +1,14 @@
 package com.example.hansaanuradha.mlender
 
+import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.OnCompleteListener
 import kotlinx.android.synthetic.main.activity_transaction_update.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +16,8 @@ import java.util.*
 
 class TransactionUpdateActivity : AppCompatActivity() {
 
+    // Progress Bar
+    private var dialog: ProgressDialog? = null
     // FireStore Reference
     var db : FirebaseFirestore?= null
 
@@ -38,6 +35,8 @@ class TransactionUpdateActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "UPDATE TRANSACTION"
 
+        dialog = ProgressDialog(this)
+
         db = FirebaseFirestore.getInstance()
 
         fullName = intent.getStringExtra("fullname")
@@ -50,7 +49,8 @@ class TransactionUpdateActivity : AppCompatActivity() {
     }
 
     fun updateTransaction(view : View){
-        if(!paidInterestEditText.text.isNullOrEmpty()){
+
+        if(!paidInterestEditText.text.isNullOrEmpty() && !paidAmountEditText.text.isNullOrEmpty()){
             if (paidAmountEditText.text.isNullOrEmpty()){
                 amountEntered = 0.0
             }
@@ -58,12 +58,15 @@ class TransactionUpdateActivity : AppCompatActivity() {
             // Update
             updateFields()
         } else
-            Toast.makeText(this, "Please Fill the Required Fields " + amountEntered, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please Fill the Required Fields $amountEntered", Toast.LENGTH_SHORT).show()
     }
 
-    fun updateFields(){
+    private fun updateFields(){
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
         val startDate = dateFormat.parse(startDateString)
+        // Show Dialog box
+        dialog?.setMessage("Updating Transaction, please wait.")
+        dialog?.show()
 
         if (amount != 0.0) {
             db?.collection("transactions")
@@ -93,15 +96,25 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                 var updatedStatus = !notCompletedRadioButton.isChecked
                                 updatedStatus = completedRadioButton.isChecked
 
-
-                                Log.i("result", "Previous :" + currentRemainingAmount + "\n Remain : " + updatedRemainingAmount)
+                                if(currentRemainingAmount == 0.0 && currentInterestToReceive == 0.0){
+                                    Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                }
+                                Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
                                 transactionRef
                                         ?.update("remainingAmount", updatedRemainingAmount,
                                                 "totalProfit", updatedTotalProfit,
                                                  "interestToRecieve", currentInterestToReceive,
                                                  "completed", updatedStatus)
-                                        ?.addOnSuccessListener(OnSuccessListener<Void> { Log.d("result", "DocumentSnapshot successfully updated!") })
-                                        ?.addOnFailureListener(OnFailureListener { e -> Log.w("result", "Error updating document", e) })
+                                        ?.addOnSuccessListener(OnSuccessListener<Void> { Log.d("result", "DocumentSnapshot successfully updated!")
+                                            Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
+                                            // Dismiss Dialog Box
+                                            dialog?.dismiss()
+                                        })
+                                        ?.addOnFailureListener(OnFailureListener { e -> Log.w("result", "Error updating document", e)
+                                            Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
+                                            // Dismiss Dialog Box
+                                            dialog?.dismiss()
+                                        })
                             }
                         } else {
                             Log.d("result", "Error getting documents: ", task.exception)
