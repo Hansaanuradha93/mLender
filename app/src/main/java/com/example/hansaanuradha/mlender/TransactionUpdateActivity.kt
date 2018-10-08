@@ -114,6 +114,7 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                             Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
                                             // Dismiss Dialog Box
                                             dialog?.dismiss()
+
                                         })
                             }
                         } else {

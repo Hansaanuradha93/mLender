@@ -10,14 +10,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_dash_board.*
+import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashBoardActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dash_board)
+        setContentView(R.layout.activity_dashboard)
 
         setSupportActionBar(findViewById(R.id.app_bar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,7 +44,7 @@ class DashBoardActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> {
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             true
