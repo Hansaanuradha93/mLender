@@ -20,4 +20,5 @@
     <string name="not_completed">Not Completed</string>
     <string name="completed">Completed</string>
     <string name="update_transaction_button">UPDATE</string>
+    <string name="arrears">Arrears :</string>
 </resources>

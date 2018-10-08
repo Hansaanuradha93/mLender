@@ -76,7 +76,7 @@ class TransactionActivity : AppCompatActivity() {
                     // Save Customer to Db
                     addCustomer(fName, lName)
 
-                    // Save Transation to Db
+                    // Save Transaction to Db
                     addTransaction(fName, lName)
                 }
 
@@ -88,19 +88,13 @@ class TransactionActivity : AppCompatActivity() {
     private fun addCustomer(fName : String, lName : String){
 
         // Customer Details
-        val fullName = fName + " " + lName
+        val fullName = "$fName $lName"
         val addressNumber = addressNoEditText.text.toString()
         val street = streetEditText.text.toString()
         val city = cityEditText.text.toString()
         val state = stateEditText.text.toString()
         val contactNumber = contactNumberEditText.text.toString()
 
-
-        val startDateString = startDateEditText.text.toString()
-        val endDateString = endDateEditText.text.toString()
-        val dateFormat = SimpleDateFormat("dd/M/yyyy")
-        val startDate = dateFormat.parse(startDateString)
-        val endDate = dateFormat.parse(endDateString)
 
         val customer : Customer = Customer(fName, lName, addressNumber, street, city, state,
                 contactNumber)
@@ -122,7 +116,7 @@ class TransactionActivity : AppCompatActivity() {
     private fun addTransaction(fName : String, lName : String){
 
         // Transaction Details
-        val fullName = fName + " " + lName
+        val fullName = "$fName $lName"
         val startDateString = startDateEditText.text.toString()
         val endDateString = endDateEditText.text.toString()
         val dateFormat = SimpleDateFormat("dd/M/yyyy")
@@ -135,13 +129,19 @@ class TransactionActivity : AppCompatActivity() {
             isOnlyInterest = true
         else if(instalmentRadioButton.isChecked)
             isOnlyInterest = false
+        var promissoryNote = true
+        if(promissoryNoteRadioButton.isChecked)
+            promissoryNote = true
+        else if(landRadioButton.isChecked)
+            promissoryNote = false
         val isCompleted = false
-        val remainingAmount = initialAmount
-        val interestToRecieve = remainingAmount * (interestRate / 100)
+        val interestToReceive = initialAmount * (interestRate / 100)
         val totalProfit = 0.00
+        val arrears = 0.0
+
 
         val transaction : Transaction = Transaction(fullName,startDate, initialAmount, endDate,
-                interestRate, isOnlyInterest, isCompleted, remainingAmount , interestToRecieve, totalProfit)
+                interestRate, isOnlyInterest, isCompleted, initialAmount, interestToReceive, totalProfit, arrears, promissoryNote)
 
         transactionRef = db?.collection("transactions")
 

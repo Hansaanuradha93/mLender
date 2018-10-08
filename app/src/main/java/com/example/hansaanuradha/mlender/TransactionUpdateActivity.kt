@@ -44,7 +44,46 @@ class TransactionUpdateActivity : AppCompatActivity() {
         amount = intent.getDoubleExtra("amount", 0.0)
 
 
+        getArrears()
 
+    }
+
+    fun getArrears(){
+        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
+        val startDate = dateFormat.parse(startDateString)
+        db?.collection("transactions")
+                ?.whereEqualTo("from", fullName)
+                ?.whereEqualTo("initialAmount", amount)
+                ?.whereEqualTo("startDate", startDate)
+                ?.get()
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            Log.d("result", document.id + " => " + document.data)
+
+                            val currentArrears : Double= java.lang.Double.parseDouble(document.get("arrears").toString())
+
+                            if (currentArrears!! > 0.0){
+                                updateArrearsEditText.isEnabled = true
+                                updateArrearsEditText.visibility = View.VISIBLE
+
+                                currentArrearsTextView.isEnabled = true
+                                currentArrearsTextView.visibility = View.VISIBLE
+
+                                currentArrearsTextView.text = "There is $currentArrears amount of Arrears"
+                            } else {
+                                updateArrearsEditText.isEnabled = false
+                                updateArrearsEditText.visibility = View.GONE
+
+                                currentArrearsTextView.isEnabled = false
+                                currentArrearsTextView.visibility = View.GONE
+                            }
+
+                        }
+                    } else {
+                        Log.d("result", "Error getting documents: ", task.exception)
+                    }
+                }
 
     }
 
@@ -91,20 +130,28 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                 val updatedTotalProfit : Double = currentTotalProfit + paidInterest
 
                                 val currentInterestRate : Double = java.lang.Double.parseDouble(document.get("interestRate").toString())
-                                val currentInterestToReceive : Double = updatedRemainingAmount * currentInterestRate / 100
+                                val updatedInterestToReceive : Double = updatedRemainingAmount * currentInterestRate / 100
 
                                 var updatedStatus = !notCompletedRadioButton.isChecked
                                 updatedStatus = completedRadioButton.isChecked
 
-                                if(currentRemainingAmount == 0.0 && currentInterestToReceive == 0.0){
+                                var currentInterestToReceive : Double = java.lang.Double.parseDouble(document.get("interestToRecieve").toString())
+                                var arrears : Double = java.lang.Double.parseDouble(document.get("arrears").toString())
+
+                                if(currentRemainingAmount == 0.0 && updatedInterestToReceive == 0.0){
                                     Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                }
+                                if(paidInterest < currentInterestToReceive){
+                                    val interestGap = currentInterestToReceive - paidInterest
+                                    arrears += interestGap
                                 }
                                 Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
                                 transactionRef
                                         ?.update("remainingAmount", updatedRemainingAmount,
                                                 "totalProfit", updatedTotalProfit,
-                                                 "interestToRecieve", currentInterestToReceive,
-                                                 "completed", updatedStatus)
+                                                 "interestToRecieve", updatedInterestToReceive,
+                                                 "completed", updatedStatus,
+                                                 "arrears", arrears   )
                                         ?.addOnSuccessListener(OnSuccessListener<Void> { Log.d("result", "DocumentSnapshot successfully updated!")
                                             Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
                                             // Dismiss Dialog Box

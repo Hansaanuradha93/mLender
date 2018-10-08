@@ -63,6 +63,37 @@
     </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/updateArrearsTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/updateArrearsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Arrears"
+                android:inputType="number"
+                android:enabled="false"
+                android:visibility="gone"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+
+            <TextView
+                android:id="@+id/currentArrearsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arrears"
+                android:textSize="18sp"
+                android:visibility="gone"
+                android:enabled="false"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/colorRed"/>
+
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/updatedTransactionStatusTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,6 +110,8 @@
                 android:textSize="18sp"/>
 
         </android.support.design.widget.TextInputLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

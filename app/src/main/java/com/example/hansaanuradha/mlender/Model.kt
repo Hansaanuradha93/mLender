@@ -9,6 +9,7 @@ class Customer(val fname : String, val lname: String, val addressNo: String, val
 
 class Transaction(val from: String, val startDate: Date?, val initialAmount: Double?, val endDate: Date?,
                   val interestRate: Double?, val onlyInterest: Boolean?, val completed: Boolean?, val remainingAmount: Double?,
-                  val interestToRecieve: Double?, val totalProfit: Double?){
-    constructor() : this("", null,null , null, null, null, null, null, null, null )
+                  val interestToRecieve: Double?, val totalProfit: Double?, val arrears : Double?, val promissoryNote : Boolean?){
+    constructor() : this("", null,null , null, null, null, null, null, null, null, null, null )
+
 }

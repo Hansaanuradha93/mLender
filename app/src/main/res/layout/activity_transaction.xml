@@ -239,14 +239,15 @@
         </android.support.design.widget.TextInputLayout>
 
 
+
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/transactionTypeTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            app:errorEnabled="true"
-            android:layout_marginLeft="8dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:id="@+id/transactionTypeTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        app:errorEnabled="true"
+        android:layout_marginLeft="8dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <TextView
             android:id="@+id/transactionTypeTextView"
@@ -254,6 +255,52 @@
             android:layout_height="wrap_content"
             android:text="Transaction Type : "
             android:textSize="18sp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/transactionTypeRadioGroup"
+                android:checkedButton="@+id/instalmentRadioButton" >
+
+                <RadioButton
+                    android:id="@+id/onlyInterestRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Only Interest"
+                    android:paddingRight="8dp"/>
+                <RadioButton
+                    android:id="@+id/instalmentRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Instalment"/>
+            </RadioGroup>
+        </LinearLayout>
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/isPromissoryNoteTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            app:errorEnabled="true"
+            android:layout_marginLeft="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <TextView
+                android:id="@+id/isPromissoryNoteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agreement : "
+                android:textSize="18sp"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -264,24 +311,26 @@
             android:layout_marginTop="8dp">
 
             <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/transactionTypeRadioGroup"
-            android:checkedButton="@+id/instalmentRadioButton" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/isPromissoryNoteRadioGroup"
+                android:checkedButton="@+id/promissoryNoteRadioButton" >
 
-            <RadioButton
-                android:id="@+id/onlyInterestRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Only Interest"
-                android:paddingRight="8dp"/>
-            <RadioButton
-                android:id="@+id/instalmentRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instalment"/>
+                <RadioButton
+                    android:id="@+id/promissoryNoteRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Promissory Note"
+                    android:paddingRight="8dp"/>
+                <RadioButton
+                    android:id="@+id/landRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Land"/>
             </RadioGroup>
         </LinearLayout>
+
+
 
         <android.support.design.button.MaterialButton
             android:id="@+id/saveButton"

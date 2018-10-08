@@ -4,12 +4,10 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.Timestamp
-import kotlinx.android.synthetic.main.activity_transaction_details.*
+import kotlinx.android.synthetic.main.activity_updated_transaction_details.*
 import java.text.SimpleDateFormat
 import android.util.Log
 import android.view.View
@@ -34,7 +32,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transaction_details)
+        setContentView(R.layout.activity_updated_transaction_details)
         setSupportActionBar(findViewById(R.id.app_bar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Transaction Details"
@@ -113,14 +111,23 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             else
                                 "Not Completed"
 
+                            var agreementType : String ?= null
+                            agreementType = if(transaction.promissoryNote as Boolean)
+                                "Promissory note"
+                            else
+                                "Land"
+
+
                             getAmountTextView.text = "Amount : " + transaction.initialAmount
                             getRemainingAmountTextView.text = "Remaining Amount : " + transaction.remainingAmount.toString()
                             getInterestRateTextView.text = "Interest Rate : " + transaction.interestRate.toString()
                             getMonthlyInterestAmountTextView.text = "Monthly Interest : " + transaction.interestToRecieve.toString()
                             getTotalProfitTextView.text = "Total Profit : " + transaction.totalProfit.toString()
+                            getArrearsTextView.text = "Arrears : " + transaction.arrears
                             getStartDateTextView.text = "Start Date : $startDateString"
                             getEndDateTextView.text = "End Date : $endDateString"
-                            transactionTypeTextView.text = "Transaction Type : $transactionType"
+                            getTransactionTypeTextView.text = "Transaction Type : $transactionType"
+                            getAgreementTypeTextView.text = "Agreement Type : $agreementType"
                             getStatusTextView.text = "Status : $status"
 
                             // Dismiss Dialog Box
