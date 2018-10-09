@@ -2,6 +2,7 @@ package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.firestore.*
@@ -130,6 +131,24 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             getAgreementTypeTextView.text = "Agreement Type : $agreementType"
                             getStatusTextView.text = "Status : $status"
 
+                            // Highlight required fields
+                            getAmountTextView.setTextColor(Color.rgb(0,100,0))
+                            getRemainingAmountTextView.setTextColor(Color.rgb(0,100,0))
+                            getMonthlyInterestAmountTextView.setTextColor(Color.rgb(0,100,0))
+                            getTotalProfitTextView.setTextColor(Color.rgb(0,100,0))
+                            if(transaction.arrears!! > 0.0)
+                                getArrearsTextView.setTextColor(Color.rgb(255,0,0))
+                            else
+                                getArrearsTextView.setTextColor(Color.rgb(0,100,0))
+
+                            getAgreementTypeTextView.setTextColor(Color.rgb(0,100,0))
+                            getStatusTextView.setTextColor(Color.rgb(0,100,0))
+
+
+                            // If transaction is Completed Disable "Update Button"
+                            if(transaction.completed){
+                                updateButton.isEnabled = false
+                            }
                             // Dismiss Dialog Box
                             dialog?.dismiss()
                         }

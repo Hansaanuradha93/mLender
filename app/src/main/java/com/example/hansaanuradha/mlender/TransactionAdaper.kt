@@ -1,6 +1,7 @@
 package com.example.hansaanuradha.mlender
 
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +20,13 @@ class TransactionAdaper(options: FirestoreRecyclerOptions<Transaction>) : Firest
 
         formatter = SimpleDateFormat("dd/M/yyyy")
         val startDateString : String = formatter!!.format(model.startDate)
+        if(model.completed!!) {
+            holder?.itemView.amountTextView.setTextColor(Color.rgb(0,100,0))
+            holder?.itemView.amountTextView.text = "Amount : " + model.initialAmount.toString() + "\nDate : $startDateString || Completed"
+        }
+        else
+            holder?.itemView.amountTextView.text = "Amount : " + model.initialAmount.toString() + "\nDate : $startDateString"
 
-        holder?.itemView.amountTextView.text = "Amount : " + model.initialAmount.toString() + "\nDate : $startDateString"
         holder?.itemView.hiddenFullName.text = model.from
         holder?.itemView.hiddenAmount.text = model.initialAmount.toString()
         holder?.itemView.hiddenStartDate.text = model.startDate.toString()

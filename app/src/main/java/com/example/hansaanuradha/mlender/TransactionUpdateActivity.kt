@@ -1,6 +1,7 @@
 package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -48,7 +49,7 @@ class TransactionUpdateActivity : AppCompatActivity() {
 
     }
 
-    fun getArrears(){
+    private fun getArrears(){
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
         val startDate = dateFormat.parse(startDateString)
         db?.collection("transactions")
@@ -64,16 +65,12 @@ class TransactionUpdateActivity : AppCompatActivity() {
                             val currentArrears : Double= java.lang.Double.parseDouble(document.get("arrears").toString())
 
                             if (currentArrears!! > 0.0){
-                                updateArrearsEditText.isEnabled = true
-                                updateArrearsEditText.visibility = View.VISIBLE
 
                                 currentArrearsTextView.isEnabled = true
                                 currentArrearsTextView.visibility = View.VISIBLE
-
+                                currentArrearsTextView.setTextColor(Color.rgb(255,0,0))
                                 currentArrearsTextView.text = "There is $currentArrears amount of Arrears"
                             } else {
-                                updateArrearsEditText.isEnabled = false
-                                updateArrearsEditText.visibility = View.GONE
 
                                 currentArrearsTextView.isEnabled = false
                                 currentArrearsTextView.visibility = View.GONE
@@ -119,50 +116,62 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                 Log.d("result", document.id + " => " + document.data)
 
                                 val transactionRef = db?.collection("transactions")?.document(document.id)
-                                val paidAmount : Double = java.lang.Double.parseDouble(paidAmountEditText.text.toString())
-                                val currentRemainingAmount : Double =  java.lang.Double.parseDouble(document.get("remainingAmount").toString())
-                                if (paidAmount > currentRemainingAmount)
+                                val paidAmount: Double = java.lang.Double.parseDouble(paidAmountEditText.text.toString())
+                                val currentRemainingAmount: Double = java.lang.Double.parseDouble(document.get("remainingAmount").toString())
+                                if (paidAmount > currentRemainingAmount) {
                                     Toast.makeText(this, "Invalid Input for Paid Amount", Toast.LENGTH_SHORT).show()
-                                val updatedRemainingAmount : Double = currentRemainingAmount - paidAmount
+                                } else {
+                                    val updatedRemainingAmount: Double = currentRemainingAmount - paidAmount
 
-                                val currentTotalProfit : Double = java.lang.Double.parseDouble(document.get("totalProfit").toString())
-                                val paidInterest : Double = java.lang.Double.parseDouble(paidInterestEditText.text.toString())
-                                val updatedTotalProfit : Double = currentTotalProfit + paidInterest
+                                    val currentTotalProfit: Double = java.lang.Double.parseDouble(document.get("totalProfit").toString())
+                                    val paidInterest: Double = java.lang.Double.parseDouble(paidInterestEditText.text.toString())
+                                    val updatedTotalProfit: Double = currentTotalProfit + paidInterest
 
-                                val currentInterestRate : Double = java.lang.Double.parseDouble(document.get("interestRate").toString())
-                                val updatedInterestToReceive : Double = updatedRemainingAmount * currentInterestRate / 100
+                                    val currentInterestRate: Double = java.lang.Double.parseDouble(document.get("interestRate").toString())
+                                    val updatedInterestToReceive: Double = updatedRemainingAmount * currentInterestRate / 100
 
-                                var updatedStatus = !notCompletedRadioButton.isChecked
-                                updatedStatus = completedRadioButton.isChecked
+                                    var updatedStatus = !notCompletedRadioButton.isChecked
+                                    updatedStatus = completedRadioButton.isChecked
 
-                                var currentInterestToReceive : Double = java.lang.Double.parseDouble(document.get("interestToRecieve").toString())
-                                var arrears : Double = java.lang.Double.parseDouble(document.get("arrears").toString())
+                                    var currentInterestToReceive: Double = java.lang.Double.parseDouble(document.get("interestToRecieve").toString())
+                                    var arrears: Double = java.lang.Double.parseDouble(document.get("arrears").toString())
 
-                                if(currentRemainingAmount == 0.0 && updatedInterestToReceive == 0.0){
-                                    Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
-                                }
-                                if(paidInterest < currentInterestToReceive){
-                                    val interestGap = currentInterestToReceive - paidInterest
+                                    if (currentRemainingAmount == 0.0 && updatedInterestToReceive == 0.0) {
+                                        Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                    // Get the Interest Gap
+                                    var interestGap: Double = 0.0
+                                    interestGap = currentInterestToReceive - paidInterest
                                     arrears += interestGap
-                                }
-                                Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
-                                transactionRef
-                                        ?.update("remainingAmount", updatedRemainingAmount,
-                                                "totalProfit", updatedTotalProfit,
-                                                 "interestToRecieve", updatedInterestToReceive,
-                                                 "completed", updatedStatus,
-                                                 "arrears", arrears   )
-                                        ?.addOnSuccessListener(OnSuccessListener<Void> { Log.d("result", "DocumentSnapshot successfully updated!")
-                                            Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
-                                            // Dismiss Dialog Box
-                                            dialog?.dismiss()
-                                        })
-                                        ?.addOnFailureListener(OnFailureListener { e -> Log.w("result", "Error updating document", e)
-                                            Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
-                                            // Dismiss Dialog Box
-                                            dialog?.dismiss()
 
-                                        })
+                                    if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears == 0.0) {
+                                        // Update Transaction Status to Completed
+                                        updatedStatus = true
+                                        updateTransactionButton.isEnabled = false
+                                    }
+
+                                    Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
+                                    transactionRef
+                                            ?.update("remainingAmount", updatedRemainingAmount,
+                                                    "totalProfit", updatedTotalProfit,
+                                                    "interestToRecieve", updatedInterestToReceive,
+                                                    "completed", updatedStatus,
+                                                    "arrears", arrears)
+                                            ?.addOnSuccessListener(OnSuccessListener<Void> {
+                                                Log.d("result", "DocumentSnapshot successfully updated!")
+                                                Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
+                                                // Dismiss Dialog Box
+                                                dialog?.dismiss()
+                                            })
+                                            ?.addOnFailureListener(OnFailureListener { e ->
+                                                Log.w("result", "Error updating document", e)
+                                                Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
+                                                // Dismiss Dialog Box
+                                                dialog?.dismiss()
+
+                                            })
+                                }
                             }
                         } else {
                             Log.d("result", "Error getting documents: ", task.exception)

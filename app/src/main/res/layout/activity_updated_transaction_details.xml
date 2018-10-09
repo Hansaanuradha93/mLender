@@ -79,7 +79,7 @@
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="188dp"
+            android:layout_marginTop="200dp"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:padding="8dp">
@@ -111,17 +111,6 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/getInterestRateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Interest Rate : "
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <TextView
                     android:id="@+id/getMonthlyInterestAmountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,6 +121,39 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+
+
+                <TextView
+                    android:id="@+id/getTotalProfitTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    android:text="Total Profit : "
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/getAgreementTypeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Agreement Type : "
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/getStatusTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Status : "
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/getArrearsTextView"
                     android:layout_width="wrap_content"
@@ -144,14 +166,14 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/getTotalProfitTextView"
+                    android:id="@+id/getInterestRateTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:text="Interest Rate : "
                     android:textSize="16sp"
-                    android:text="Total Profit : "
                     android:textStyle="bold"/>
 
                 <TextView
@@ -184,34 +206,14 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="Transaction Type : "
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/getAgreementTypeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Agreement Type : "
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/getStatusTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Status : "
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
                 <android.support.design.button.MaterialButton
-                    android:id="@+id/next_button"
+                    android:id="@+id/updateButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
