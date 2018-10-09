@@ -44,6 +44,7 @@ class DashBoardActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
             true
         }
 

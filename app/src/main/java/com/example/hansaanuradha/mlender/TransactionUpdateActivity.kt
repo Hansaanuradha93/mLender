@@ -20,13 +20,13 @@ class TransactionUpdateActivity : AppCompatActivity() {
     // Progress Bar
     private var dialog: ProgressDialog? = null
     // FireStore Reference
-    var db : FirebaseFirestore?= null
+    private var db : FirebaseFirestore?= null
 
     // Fields
-    var fullName : String ?= null
-    var startDateString : String ?= null
-    var amount : Double ?= null
-    var amountEntered : Double ?= null
+    private var fullName : String ?= null
+    private var startDateString : String ?= null
+    private var amount : Double ?= null
+    private var amountEntered : Double ?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +76,7 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                 currentArrearsTextView.visibility = View.GONE
                             }
 
+
                         }
                     } else {
                         Log.d("result", "Error getting documents: ", task.exception)
@@ -119,7 +120,9 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                 val paidAmount: Double = java.lang.Double.parseDouble(paidAmountEditText.text.toString())
                                 val currentRemainingAmount: Double = java.lang.Double.parseDouble(document.get("remainingAmount").toString())
                                 if (paidAmount > currentRemainingAmount) {
-                                    Toast.makeText(this, "Invalid Input for Paid Amount", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "Invalid Input for Amount Paid", Toast.LENGTH_SHORT).show()
+                                    // Dismiss Dialog Box
+                                    dialog?.dismiss()
                                 } else {
                                     val updatedRemainingAmount: Double = currentRemainingAmount - paidAmount
 
@@ -136,41 +139,54 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                     var currentInterestToReceive: Double = java.lang.Double.parseDouble(document.get("interestToRecieve").toString())
                                     var arrears: Double = java.lang.Double.parseDouble(document.get("arrears").toString())
 
-                                    if (currentRemainingAmount == 0.0 && updatedInterestToReceive == 0.0) {
+                                    if (currentRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears == 0.0) {
                                         Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                        // Dismiss Dialog Box
+                                        dialog?.dismiss()
+                                    } else {
+                                        if(paidInterest > currentInterestToReceive + arrears){
+                                            Toast.makeText(this, "Invalid input for Interest Paid", Toast.LENGTH_SHORT).show()
+                                            // Dismiss Dialog Box
+                                            dialog?.dismiss()
+                                        } else {
+
+                                            // Get the Interest Gap
+                                            var interestGap: Double = 0.0
+                                            interestGap = currentInterestToReceive - paidInterest
+                                            arrears += interestGap
+
+                                            if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears <= 0.0) {
+                                                // Update Transaction Status to Completed
+                                                updatedStatus = true
+                                                updateTransactionButton.isEnabled = false
+                                            }
+
+                                            Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
+                                            transactionRef
+                                                    ?.update("remainingAmount", updatedRemainingAmount,
+                                                            "totalProfit", updatedTotalProfit,
+                                                            "interestToRecieve", updatedInterestToReceive,
+                                                            "completed", updatedStatus,
+                                                            "arrears", arrears)
+                                                    ?.addOnSuccessListener(OnSuccessListener<Void> {
+                                                        Log.d("result", "DocumentSnapshot successfully updated!")
+                                                        Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
+                                                        getArrears()
+                                                        if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears == 0.0) {
+                                                            Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                        // Dismiss Dialog Box
+                                                        dialog?.dismiss()
+                                                    })
+                                                    ?.addOnFailureListener(OnFailureListener { e ->
+                                                        Log.w("result", "Error updating document", e)
+                                                        Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
+                                                        // Dismiss Dialog Box
+                                                        dialog?.dismiss()
+
+                                                    })
+                                        }
                                     }
-
-                                    // Get the Interest Gap
-                                    var interestGap: Double = 0.0
-                                    interestGap = currentInterestToReceive - paidInterest
-                                    arrears += interestGap
-
-                                    if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears == 0.0) {
-                                        // Update Transaction Status to Completed
-                                        updatedStatus = true
-                                        updateTransactionButton.isEnabled = false
-                                    }
-
-                                    Log.i("result", "Previous :$currentRemainingAmount\n Remain : $updatedRemainingAmount")
-                                    transactionRef
-                                            ?.update("remainingAmount", updatedRemainingAmount,
-                                                    "totalProfit", updatedTotalProfit,
-                                                    "interestToRecieve", updatedInterestToReceive,
-                                                    "completed", updatedStatus,
-                                                    "arrears", arrears)
-                                            ?.addOnSuccessListener(OnSuccessListener<Void> {
-                                                Log.d("result", "DocumentSnapshot successfully updated!")
-                                                Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
-                                                // Dismiss Dialog Box
-                                                dialog?.dismiss()
-                                            })
-                                            ?.addOnFailureListener(OnFailureListener { e ->
-                                                Log.w("result", "Error updating document", e)
-                                                Toast.makeText(this, "Failed to Update", Toast.LENGTH_SHORT).show()
-                                                // Dismiss Dialog Box
-                                                dialog?.dismiss()
-
-                                            })
                                 }
                             }
                         } else {

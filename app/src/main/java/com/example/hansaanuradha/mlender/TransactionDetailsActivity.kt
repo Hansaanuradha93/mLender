@@ -63,6 +63,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
         intent.putExtra("fullname", fullName)
         intent.putExtra("startDateString", startDateString)
         startActivity(intent)
+        finish()
     }
 
     private fun getCustomerDetails(db : FirebaseFirestore ?= null, fullName : String ?= null){
@@ -118,7 +119,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             else
                                 "Land"
 
-
+                            // Assign values to TextViews
                             getAmountTextView.text = "Amount : " + transaction.initialAmount
                             getRemainingAmountTextView.text = "Remaining Amount : " + transaction.remainingAmount.toString()
                             getInterestRateTextView.text = "Interest Rate : " + transaction.interestRate.toString()
