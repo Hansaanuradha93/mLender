@@ -18,8 +18,6 @@ class CustomerAdapter(options: FirestoreRecyclerOptions<Customer>) : FirestoreRe
     override fun onBindViewHolder(holder: CustomerViewHolder, position: Int, model: Customer) {
         holder.itemView.customerNameTextView.text = model.fname + " " + model.lname
 
-
-
     }
 }
 
@@ -30,8 +28,14 @@ class CustomerViewHolder(view : View) : RecyclerView.ViewHolder(view){
             val intent = Intent(view.context, TransactionListActivity::class.java)
             intent?.putExtra("fullname", view.customerNameTextView.text)
             view.context.startActivity(intent)
-
         }
+       view.setOnLongClickListener {
+           val intent = Intent(view.context, CustomerUpdateActivity::class.java)
+           intent?.putExtra("fullname", view.customerNameTextView.text)
+           view.context.startActivity(intent)
+           true
+       }
+
 
     }
 }
