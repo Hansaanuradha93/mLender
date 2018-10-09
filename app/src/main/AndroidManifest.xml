@@ -9,19 +9,69 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.mLender">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".DashBoardActivity" />
-        <activity android:name=".CustomerActivity" />
-        <activity android:name=".TransactionActivity" />
-        <activity android:name=".TransactionListActivity" />
-        <activity android:name=".TransactionDetailsActivity" />
-        <activity android:name=".TransactionUpdateActivity"></activity>
+        <activity
+            android:name=".DashBoardActivity"
+            android:label="Dashboard"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DashBoardActivity" />
+        </activity>
+        <activity
+            android:name=".CustomerActivity"
+            android:label="Customers"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DashBoardActivity" />
+
+        </activity>
+        <activity
+            android:name=".TransactionActivity"
+            android:label="Transactions"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DashBoardActivity" />
+        </activity>
+        <activity
+            android:name=".TransactionListActivity"
+            android:label="TransactionList"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CustomerActivity" />
+        </activity>
+        <activity
+            android:name=".TransactionDetailsActivity"
+            android:label="TransactionDetails"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TransactionListActivity" />
+        </activity>
+        <activity
+            android:name=".TransactionUpdateActivity"
+            android:label="TransactionUpdate"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TransactionListActivity" />
+
+        </activity>
     </application>
 
 </manifest>
