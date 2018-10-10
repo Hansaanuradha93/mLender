@@ -50,7 +50,9 @@
                         android:id="@+id/updatedFirstNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="First Name"/>
+                        android:hint="First Name"
+                        android:enabled="false"/>
+
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/updatedLastNameTextInputLayout"
@@ -63,16 +65,15 @@
                         android:id="@+id/updatedLastNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Last Name"/>
+                        android:hint="Last Name"
+                        android:enabled="false" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.button.MaterialButton
-                    android:id="@+id/updateNameButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="Edit"
-                    android:textColor="@color/textColorBlack"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textColorBlack"
+                    android:layout_marginBottom="16dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,7 +104,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/updatedStreetText"
+                            android:id="@+id/updatedStreetEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Street"/>
@@ -153,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="Edit"
+                    android:onClick="updateAddress"
                     android:textColor="@color/textColorBlack"/>
 
                 <android.support.design.widget.TextInputLayout
@@ -179,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="Edit"
+                    android:onClick="updateContactNumber"
                     android:textColor="@color/textColorBlack"/>
 
 

@@ -25,8 +25,8 @@ class DashBoardActivity : AppCompatActivity() {
             startActivity(intent)
         }
         updateCardView.setOnClickListener {
-            Toast.makeText(this@DashBoardActivity, "You clicked Update.", Toast.LENGTH_SHORT).show()
-        }
+            val intent = Intent(this, CustomerActivity::class.java)
+            startActivity(intent)        }
         toDoCardView1.setOnClickListener {
             Toast.makeText(this@DashBoardActivity, "You clicked todo 1.", Toast.LENGTH_SHORT).show()
         }
