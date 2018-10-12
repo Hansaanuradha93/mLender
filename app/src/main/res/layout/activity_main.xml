@@ -87,7 +87,8 @@
                 android:layout_toLeftOf="@id/next_button"
                 android:layout_toStartOf="@id/next_button"
                 android:onClick="cancel"
-                android:text="@string/mLender_button_cancel" />
+                android:text="@string/mLender_button_cancel"
+                android:textColor="@color/textColorBlack"/>
 
         </RelativeLayout>
     </LinearLayout>

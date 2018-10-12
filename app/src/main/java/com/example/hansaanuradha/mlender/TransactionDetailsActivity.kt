@@ -8,7 +8,7 @@ import android.os.Bundle
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.android.gms.tasks.OnSuccessListener
-import kotlinx.android.synthetic.main.activity_updated_transaction_details.*
+import kotlinx.android.synthetic.main.activity_transaction_details.*
 import java.text.SimpleDateFormat
 import android.util.Log
 import android.view.View
@@ -33,7 +33,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_updated_transaction_details)
+        setContentView(R.layout.activity_transaction_details)
         setSupportActionBar(findViewById(R.id.app_bar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Transaction Details"
@@ -73,9 +73,11 @@ class TransactionDetailsActivity : AppCompatActivity() {
                 ?.addOnSuccessListener(OnSuccessListener<DocumentSnapshot>
                 { documentSnapshot -> val customer = documentSnapshot.toObject<Customer>(Customer::class.java!!)
                     val address = customer?.addressNo + ", " + customer?.street + ", " + customer?.city
-                    getFullNameTextView.text = "Full Name : $fullName"
-                    getAddressTextView.text = "Address : $address"
-                    getContactNumberTextView.text = "Contact Number : " + customer?.contactNumber
+
+                    getFullNameEditText.setText(fullName)
+                    getAddressEditText.setText(address)
+                    getContactNumberEditText.setText(customer?.contactNumber)
+
                 })
     }
 
@@ -119,31 +121,36 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             else
                                 "Land"
 
-                            // Assign values to TextViews
-                            getAmountTextView.text = "Amount : " + transaction.initialAmount
-                            getRemainingAmountTextView.text = "Remaining Amount : " + transaction.remainingAmount.toString()
-                            getInterestRateTextView.text = "Interest Rate : " + transaction.interestRate.toString()
-                            getMonthlyInterestAmountTextView.text = "Monthly Interest : " + transaction.interestToRecieve.toString()
-                            getTotalProfitTextView.text = "Total Profit : " + transaction.totalProfit.toString()
-                            getArrearsTextView.text = "Arrears : " + transaction.arrears
-                            getStartDateTextView.text = "Start Date : $startDateString"
-                            getEndDateTextView.text = "End Date : $endDateString"
-                            getTransactionTypeTextView.text = "Transaction Type : $transactionType"
-                            getAgreementTypeTextView.text = "Agreement Type : $agreementType"
-                            getStatusTextView.text = "Status : $status"
+                            // Assign values to TextBoxes
+
+                            getAmountEditText.setText(transaction.initialAmount.toString())
+                            getRemainingAmountEditText.setText(transaction.remainingAmount.toString())
+                            getInterestRateEditText.setText(transaction.interestRate.toString())
+                            getMonthlyInterestAmountEditText.setText(transaction.interestToRecieve.toString())
+                            getTotalProfitEditText.setText(transaction.totalProfit.toString())
+                            getArrearsEditText.setText(transaction.arrears.toString())
+                            getStartDateEditText.setText(startDateString)
+                            getEndDateEditText.setText(endDateString)
+                            getTransactionTypeEditText.setText(transactionType)
+                            getAgreementTypeEditText.setText(agreementType)
+                            getStatusEditText.setText(status)
+
 
                             // Highlight required fields
-                            getAmountTextView.setTextColor(Color.rgb(0,100,0))
-                            getRemainingAmountTextView.setTextColor(Color.rgb(0,100,0))
-                            getMonthlyInterestAmountTextView.setTextColor(Color.rgb(0,100,0))
-                            getTotalProfitTextView.setTextColor(Color.rgb(0,100,0))
-                            if(transaction.arrears!! > 0.0)
-                                getArrearsTextView.setTextColor(Color.rgb(255,0,0))
-                            else
-                                getArrearsTextView.setTextColor(Color.rgb(0,100,0))
 
-                            getAgreementTypeTextView.setTextColor(Color.rgb(0,100,0))
-                            getStatusTextView.setTextColor(Color.rgb(0,100,0))
+                            getAmountEditText.setTextColor(Color.rgb(0,100,0))
+                            getRemainingAmountEditText.setTextColor(Color.rgb(0,100,0))
+                            getMonthlyInterestAmountEditText.setTextColor(Color.rgb(0,100,0))
+                            getTotalProfitEditText.setTextColor(Color.rgb(0,100,0))
+                            getAgreementTypeEditText.setTextColor(Color.rgb(0,100,0))
+                            getStatusEditText.setTextColor(Color.rgb(0,100,0))
+
+
+                            if(transaction.arrears!! > 0.0)
+                                getArrearsEditText.setTextColor(Color.rgb(255,0,0))
+
+                            else
+                                getArrearsEditText.setTextColor(Color.rgb(0,100,0))
 
 
                             // If transaction is Completed Disable "Update Button"

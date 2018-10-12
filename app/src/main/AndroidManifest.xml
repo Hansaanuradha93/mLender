@@ -70,7 +70,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TransactionListActivity" />
         </activity>
-        <activity android:name=".CustomerUpdateActivity"></activity>
+        <activity android:name=".CustomerUpdateActivity"
+            android:label="CustomerUpdate"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CustomerActivity" />
+        </activity>
     </application>
 
 </manifest>
