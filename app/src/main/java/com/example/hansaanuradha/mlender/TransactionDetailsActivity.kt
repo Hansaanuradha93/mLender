@@ -104,6 +104,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
                             val startDateString : String = formatter.format(transaction.startDate)
                             val endDateString : String = formatter.format(transaction.endDate)
+                            val toBePaid = transaction?.interestToRecieve!! + transaction?.arrears!!
                             var transactionType : String ?= null
                             transactionType = if(transaction.onlyInterest as Boolean)
                                 "Only Interest"
@@ -119,7 +120,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             agreementType = if(transaction.promissoryNote as Boolean)
                                 "Promissory note"
                             else
-                                "Land"
+                                "Deed"
 
                             // Assign values to TextBoxes
 
@@ -129,6 +130,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             getMonthlyInterestAmountEditText.setText(transaction.interestToRecieve.toString())
                             getTotalProfitEditText.setText(transaction.totalProfit.toString())
                             getArrearsEditText.setText(transaction.arrears.toString())
+                            getToBePaidEditText.setText(toBePaid.toString())
                             getStartDateEditText.setText(startDateString)
                             getEndDateEditText.setText(endDateString)
                             getTransactionTypeEditText.setText(transactionType)
@@ -144,7 +146,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             getTotalProfitEditText.setTextColor(Color.rgb(0,100,0))
                             getAgreementTypeEditText.setTextColor(Color.rgb(0,100,0))
                             getStatusEditText.setTextColor(Color.rgb(0,100,0))
-
+                            getToBePaidEditText.setTextColor(Color.rgb(255,0,0))
 
                             if(transaction.arrears!! > 0.0)
                                 getArrearsEditText.setTextColor(Color.rgb(255,0,0))
