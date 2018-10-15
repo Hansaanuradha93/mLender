@@ -7,6 +7,8 @@ import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.DocumentReference
 import android.app.ProgressDialog
+import android.content.Intent
+import android.opengl.Visibility
 import android.widget.Toast
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.activity_transaction.*
@@ -23,6 +25,9 @@ class TransactionActivity : AppCompatActivity() {
     // Progress Bar
     private var dialog: ProgressDialog? = null
 
+    // Fields
+    var isStartDate : Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
@@ -34,6 +39,8 @@ class TransactionActivity : AppCompatActivity() {
 
         dialog = ProgressDialog(this)
 
+        calendarView.visibility = View.GONE
+
     }
 
     fun saveTransaction(view : View){
@@ -42,12 +49,16 @@ class TransactionActivity : AppCompatActivity() {
     }
 
     private fun validateAndSave(){
+        val testDate = intent.getStringExtra("date")
+        Toast.makeText(this, testDate, Toast.LENGTH_SHORT).show()
         if (!firstNameEditText.text.isNullOrEmpty() && !lastNameEditText.text.isNullOrEmpty()
                 && !addressNoEditText.text.isNullOrEmpty() && !streetEditText.text.isNullOrEmpty()
                 && !cityEditText.text.isNullOrEmpty() && !stateEditText.text.isNullOrEmpty()
                 && !contactNumberEditText.text.isNullOrEmpty()
                 && !initialAmountEditText.text.isNullOrEmpty() && !startDateEditText.text.isNullOrEmpty()
                 && !endDateEditText.text.isNullOrEmpty() && !interestRateEditText.text.isNullOrEmpty() ){
+
+
 
 
             val startDateString = startDateEditText.text.toString()
@@ -159,6 +170,42 @@ class TransactionActivity : AppCompatActivity() {
                     dialog?.dismiss()
                     Toast.makeText(this@TransactionActivity, "Transaction Failed !!", Toast.LENGTH_LONG).show()
                 }
+    }
+
+    fun getStartDate(view : View){
+        isStartDate = true
+        calendarView.visibility = View.VISIBLE
+        Log.i("result", isStartDate.toString())
+
+        // Get Date
+        getCalendarValue(isStartDate)
+    }
+
+    fun getEndDate(view : View){
+        isStartDate = false
+        calendarView.visibility = View.VISIBLE
+        Log.i("result", isStartDate.toString())
+
+        // Get Date
+        getCalendarValue(isStartDate)
+
+    }
+
+    private fun getCalendarValue(isStartDate : Boolean){
+        calendarView.setOnDateChangeListener { calendarView, i1, i2, i3 ->
+            val date = i1
+            val month = i2 + 1
+            val year = i3
+            val dateString = "$year/$month/$date"
+
+            if (isStartDate)
+                startDateEditText.setText(dateString)
+            else
+                endDateEditText.setText(dateString)
+
+            calendarView.visibility = View.GONE
+
+        }
     }
 
 

@@ -191,7 +191,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 app:errorEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:onClick="getStartDate">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/startDateEditText"
@@ -199,7 +200,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Start Date"
                     android:inputType="date"
-                    android:maxLength="10"/>
+                    android:maxLength="10"
+                    android:onClick="getStartDate"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -208,7 +210,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 app:errorEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:onClick="getEndDate">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/endDateEditText"
@@ -216,10 +219,16 @@
                     android:layout_height="wrap_content"
                     android:hint="End Date"
                     android:inputType="date"
-                    android:maxLength="10"/>
+                    android:maxLength="10"
+                    android:onClick="getEndDate"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+        
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/interestRateTextInputLayout"
