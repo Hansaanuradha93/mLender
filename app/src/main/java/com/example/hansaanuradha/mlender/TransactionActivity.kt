@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.hansaanuradha.mlender
 
+import android.app.DatePickerDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +12,13 @@ import com.google.firebase.firestore.DocumentReference
 import android.app.ProgressDialog
 import android.content.Intent
 import android.opengl.Visibility
+import android.widget.DatePicker
 import android.widget.Toast
+import com.example.hansaanuradha.mlender.R.id.*
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.activity_transaction.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TransactionActivity : AppCompatActivity() {
@@ -39,7 +45,6 @@ class TransactionActivity : AppCompatActivity() {
 
         dialog = ProgressDialog(this)
 
-        calendarView.visibility = View.GONE
 
     }
 
@@ -49,8 +54,6 @@ class TransactionActivity : AppCompatActivity() {
     }
 
     private fun validateAndSave(){
-        val testDate = intent.getStringExtra("date")
-        Toast.makeText(this, testDate, Toast.LENGTH_SHORT).show()
         if (!firstNameEditText.text.isNullOrEmpty() && !lastNameEditText.text.isNullOrEmpty()
                 && !addressNoEditText.text.isNullOrEmpty() && !streetEditText.text.isNullOrEmpty()
                 && !cityEditText.text.isNullOrEmpty() && !stateEditText.text.isNullOrEmpty()
@@ -115,7 +118,7 @@ class TransactionActivity : AppCompatActivity() {
         // Add Customer to db
         customerReference
                 ?.set(customer)
-                ?.addOnSuccessListener { documentReference -> Log.d("result", "DocumentSnapshot written with ID: ") }
+                ?.addOnSuccessListener { Log.d("result", "DocumentSnapshot written with ID: ") }
                 ?.addOnFailureListener { e -> Log.w("result", "Error adding document", e)
                     // Dismiss Dialog Box
                     dialog?.dismiss()
@@ -174,7 +177,6 @@ class TransactionActivity : AppCompatActivity() {
 
     fun getStartDate(view : View){
         isStartDate = true
-        calendarView.visibility = View.VISIBLE
         Log.i("result", isStartDate.toString())
 
         // Get Date
@@ -183,7 +185,6 @@ class TransactionActivity : AppCompatActivity() {
 
     fun getEndDate(view : View){
         isStartDate = false
-        calendarView.visibility = View.VISIBLE
         Log.i("result", isStartDate.toString())
 
         // Get Date
@@ -192,21 +193,28 @@ class TransactionActivity : AppCompatActivity() {
     }
 
     private fun getCalendarValue(isStartDate : Boolean){
-        calendarView.setOnDateChangeListener { calendarView, i1, i2, i3 ->
+
+        val calendar = Calendar.getInstance()
+        val date : Int = calendar.get(Calendar.DAY_OF_MONTH)
+        val month : Int = calendar.get(Calendar.MONTH)
+        val year : Int = calendar.get(Calendar.YEAR)
+
+        val dateTimePicker : DatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { datePicker, i1, i2, i3 ->
+
             val date = i1
             val month = i2 + 1
             val year = i3
             val dateString = "$year/$month/$date"
-
             if (isStartDate)
                 startDateEditText.setText(dateString)
             else
                 endDateEditText.setText(dateString)
+        }, year,month,date)
 
-            calendarView.visibility = View.GONE
+        dateTimePicker.show()
 
-        }
     }
+
 
 
 

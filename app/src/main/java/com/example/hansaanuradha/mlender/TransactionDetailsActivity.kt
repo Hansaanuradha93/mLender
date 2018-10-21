@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
@@ -12,9 +14,11 @@ import kotlinx.android.synthetic.main.activity_transaction_details.*
 import java.text.SimpleDateFormat
 import android.util.Log
 import android.view.View
+import com.example.hansaanuradha.mlender.R.id.*
 import java.util.*
 
 
+@Suppress("NAME_SHADOWING")
 class TransactionDetailsActivity : AppCompatActivity() {
 
     // FireStore Reference
@@ -71,7 +75,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
         customerReference?.get()
                 ?.addOnSuccessListener(OnSuccessListener<DocumentSnapshot>
-                { documentSnapshot -> val customer = documentSnapshot.toObject<Customer>(Customer::class.java!!)
+                { documentSnapshot -> val customer = documentSnapshot.toObject<Customer>(Customer::class.java)
                     val address = customer?.addressNo + ", " + customer?.street + ", " + customer?.city
 
                     getFullNameEditText.setText(fullName)
@@ -94,7 +98,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                 ?.get()
                 ?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        var formatter : SimpleDateFormat?= null
+                        var formatter: SimpleDateFormat?
                         for (document in task.result) {
 
                             formatter = SimpleDateFormat("dd/M/yyyy")
@@ -104,8 +108,8 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
                             val startDateString : String = formatter.format(transaction.startDate)
                             val endDateString : String = formatter.format(transaction.endDate)
-                            val toBePaid = transaction?.interestToRecieve!! + transaction?.arrears!!
-                            var transactionType : String ?= null
+                            val toBePaid = transaction.interestToRecieve!! + transaction.arrears!!
+                            var transactionType: String?
                             transactionType = if(transaction.onlyInterest as Boolean)
                                 "Only Interest"
                             else
@@ -116,7 +120,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             else
                                 "Not Completed"
 
-                            var agreementType : String ?= null
+                            var agreementType: String?
                             agreementType = if(transaction.promissoryNote as Boolean)
                                 "Promissory note"
                             else
@@ -148,7 +152,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
                             getStatusEditText.setTextColor(Color.rgb(0,100,0))
                             getToBePaidEditText.setTextColor(Color.rgb(255,0,0))
 
-                            if(transaction.arrears!! > 0.0)
+                            if(transaction.arrears > 0.0)
                                 getArrearsEditText.setTextColor(Color.rgb(255,0,0))
 
                             else

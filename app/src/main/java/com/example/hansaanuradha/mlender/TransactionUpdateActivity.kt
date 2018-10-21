@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
@@ -7,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.hansaanuradha.mlender.R.id.*
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -64,7 +67,7 @@ class TransactionUpdateActivity : AppCompatActivity() {
 
                             val currentArrears : Double= java.lang.Double.parseDouble(document.get("arrears").toString())
 
-                            if (currentArrears!! > 0.0){
+                            if (currentArrears > 0.0){
 
                                 currentArrearsTextView.isEnabled = true
                                 currentArrearsTextView.visibility = View.VISIBLE
@@ -151,8 +154,7 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                         } else {
 
                                             // Get the Interest Gap
-                                            var interestGap: Double = 0.0
-                                            interestGap = currentInterestToReceive - paidInterest
+                                            var interestGap: Double = currentInterestToReceive - paidInterest
                                             arrears += interestGap
 
                                             if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears <= 0.0) {

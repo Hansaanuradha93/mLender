@@ -26,12 +26,12 @@ class CustomerViewHolder(view : View) : RecyclerView.ViewHolder(view){
     init{
         view.setOnClickListener {
             val intent = Intent(view.context, TransactionListActivity::class.java)
-            intent?.putExtra("fullname", view.customerNameTextView.text)
+            intent.putExtra("fullname", view.customerNameTextView.text)
             view.context.startActivity(intent)
         }
        view.setOnLongClickListener {
            val intent = Intent(view.context, CustomerUpdateActivity::class.java)
-           intent?.putExtra("fullname", view.customerNameTextView.text)
+           intent.putExtra("fullname", view.customerNameTextView.text)
            view.context.startActivity(intent)
            true
        }

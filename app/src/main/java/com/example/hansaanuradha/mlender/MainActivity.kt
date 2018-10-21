@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.hansaanuradha.mlender
 
 import android.content.Intent
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("result", "signInWithEmail:success")
-                        val user = mAuth?.getCurrentUser()
+                        //val user = mAuth?.getCurrentUser()
                         // Dismiss Dialog Box
                         dialog?.dismiss()
                         updateUI()

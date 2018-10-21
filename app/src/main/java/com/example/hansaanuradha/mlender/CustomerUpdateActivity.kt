@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.hansaanuradha.mlender
 
 import android.app.ProgressDialog
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.DocumentReference
 
 
 
+@Suppress("DEPRECATION")
 class CustomerUpdateActivity : AppCompatActivity() {
 
     // FireStore Reference
