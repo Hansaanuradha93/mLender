@@ -173,9 +173,14 @@ class TransactionUpdateActivity : AppCompatActivity() {
                                                     ?.addOnSuccessListener(OnSuccessListener<Void> {
                                                         Log.d("result", "DocumentSnapshot successfully updated!")
                                                         Toast.makeText(this, "Transaction Successfully Updated", Toast.LENGTH_SHORT).show()
+                                                        // Get Arrears
                                                         getArrears()
+                                                        // Clear Text
+                                                        clearText()
                                                         if (updatedRemainingAmount == 0.0 && updatedInterestToReceive == 0.0 && arrears == 0.0) {
                                                             Toast.makeText(this, "This Transaction is Completed", Toast.LENGTH_SHORT).show()
+                                                            // Clear Text
+                                                            clearText()
                                                         }
                                                         // Dismiss Dialog Box
                                                         dialog?.dismiss()
@@ -198,5 +203,10 @@ class TransactionUpdateActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    private fun clearText() {
+        paidAmountEditText.setText("")
+        paidInterestEditText.setText("")
     }
 }

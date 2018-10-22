@@ -10,17 +10,14 @@ import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.DocumentReference
 import android.app.ProgressDialog
-import android.content.Intent
-import android.opengl.Visibility
-import android.widget.DatePicker
 import android.widget.Toast
-import com.example.hansaanuradha.mlender.R.id.*
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.activity_transaction.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
+@Suppress("NAME_SHADOWING")
 class TransactionActivity : AppCompatActivity() {
 
     // Firestore Reference
@@ -167,12 +164,21 @@ class TransactionActivity : AppCompatActivity() {
                     // Dismiss Dialog Box
                     dialog?.dismiss()
                     Toast.makeText(this@TransactionActivity, "Transaction Saved", Toast.LENGTH_LONG).show()
+                    clearText()
                 }
                 ?.addOnFailureListener { e -> Log.w("result", "Error adding document", e)
                     // Dismiss Dialog Box
                     dialog?.dismiss()
                     Toast.makeText(this@TransactionActivity, "Transaction Failed !!", Toast.LENGTH_LONG).show()
                 }
+    }
+
+    private fun clearText() {
+        initialAmountEditText.setText("")
+        startDateEditText.setText("")
+        endDateEditText.setText("")
+        interestRateEditText.setText("")
+
     }
 
     fun getStartDate(view : View){
@@ -201,10 +207,8 @@ class TransactionActivity : AppCompatActivity() {
 
         val dateTimePicker : DatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { datePicker, i1, i2, i3 ->
 
-            val date = i1
             val month = i2 + 1
-            val year = i3
-            val dateString = "$year/$month/$date"
+            val dateString = "$i3/$month/$i1"
             if (isStartDate)
                 startDateEditText.setText(dateString)
             else
