@@ -235,6 +235,14 @@
         </LinearLayout>
 
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/textColorBlack"
+            android:layout_marginBottom="16dp"/>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

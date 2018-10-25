@@ -59,79 +59,94 @@ class TransactionActivity : AppCompatActivity() {
         // Check customer availability
         lastNameEditText.setOnKeyListener(View.OnKeyListener { view, i, keyEvent ->
 
-            when (i) {
-                KeyEvent.KEYCODE_ENTER -> {
-                    val customerCollectionReference = db?.collection("customers")
-
-                    customerCollectionReference
-                            ?.whereEqualTo("fname", firstNameEditText.text.toString().toLowerCase())
-                            ?.whereEqualTo("lname", lastNameEditText.text.toString().toLowerCase())
-                            ?.get()
-                            ?.addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    for (document in task.result) {
-                                        Log.d("result", document.id + " => " + document.data)
-
-                                        var addressNumber = document.get("addressNo").toString()
-                                        var street = document.get("street").toString()
-                                        var city= document.get("city").toString()
-                                        var state = document.get("state").toString()
-                                        var contactNumber = document.get("contactNumber").toString()
-
-                                        // Display Customer Details
-                                        addressNoEditText.setText(addressNumber)
-                                        streetEditText.setText(street)
-                                        cityEditText.setText(city)
-                                        stateEditText.setText(state)
-                                        contactNumberEditText.setText(contactNumber)
-
-                                    }
-                                } else {
-                                    Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
-                                }
-                            }
-                    Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
-                    true
-                }
-                else -> {
-                }
-            }
-            val customerCollectionReference = db?.collection("customers")
-
-            customerCollectionReference
-                    ?.whereEqualTo("fname", firstNameEditText.text.toString())
-                    ?.whereEqualTo("lname", lastNameEditText.text.toString())
-                    ?.get()
-                    ?.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            for (document in task.result) {
-                                Log.d("result", document.id + " => " + document.data)
-
-                                var documentId = document.id
-                                var addressNumber = document.get("addressNo").toString()
-                                var street = document.get("street").toString()
-                                var city= document.get("city").toString()
-                                var state = document.get("state").toString()
-                                var contactNumber = document.get("contactNumber").toString()
-
-                                // Display Customer Details
-                                addressNoEditText.setText(addressNumber)
-                                streetEditText.setText(street)
-                                cityEditText.setText(city)
-                                stateEditText.setText(state)
-                                contactNumberEditText.setText(contactNumber)
-
-                            }
-                        } else {
-                            Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
-                        }
-                    }
-            Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
+            // Autocomplete Customer Details
+            autocompleteCustomerDetails(i)
             true
         })
 
 
 
+    }
+
+    private fun autocompleteCustomerDetails(i : Int) {
+        // Show Dialog box
+        dialog?.setMessage("")
+        dialog?.show()
+
+        when (i) {
+            KeyEvent.KEYCODE_ENTER -> {
+                val customerCollectionReference = db?.collection("customers")
+
+                // Get customer details
+                customerCollectionReference
+                        ?.whereEqualTo("fname", firstNameEditText.text.toString().toLowerCase())
+                        ?.whereEqualTo("lname", lastNameEditText.text.toString().toLowerCase())
+                        ?.get()
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                for (document in task.result) {
+                                    Log.d("result", document.id + " => " + document.data)
+
+
+                                    var addressNumber = document.get("addressNo").toString()
+                                    var street = document.get("street").toString()
+                                    var city= document.get("city").toString()
+                                    var state = document.get("state").toString()
+                                    var contactNumber = document.get("contactNumber").toString()
+
+                                    // Fill Customer Details to text fields
+                                    addressNoEditText.setText(addressNumber)
+                                    streetEditText.setText(street)
+                                    cityEditText.setText(city)
+                                    stateEditText.setText(state)
+                                    contactNumberEditText.setText(contactNumber)
+
+                                }
+                            } else {
+                                Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
+                            }
+                        }
+                Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
+                true
+            }
+            else -> {
+            }
+        }
+        val customerCollectionReference = db?.collection("customers")
+
+        customerCollectionReference
+                ?.whereEqualTo("fname", firstNameEditText.text.toString())
+                ?.whereEqualTo("lname", lastNameEditText.text.toString())
+                ?.get()
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            Log.d("result", document.id + " => " + document.data)
+
+                            var documentId = document.id
+                            var addressNumber = document.get("addressNo").toString()
+                            var street = document.get("street").toString()
+                            var city= document.get("city").toString()
+                            var state = document.get("state").toString()
+                            var contactNumber = document.get("contactNumber").toString()
+
+                            // Display Customer Details
+                            addressNoEditText.setText(addressNumber)
+                            streetEditText.setText(street)
+                            cityEditText.setText(city)
+                            stateEditText.setText(state)
+                            contactNumberEditText.setText(contactNumber)
+                            // Dismiss Dialog Box
+                            dialog?.dismiss()
+
+                        }
+                    } else {
+                        Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
+                        // Dismiss Dialog Box
+                        dialog?.dismiss()
+                    }
+                }
+        Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
     }
 
     fun saveTransaction(view : View){
