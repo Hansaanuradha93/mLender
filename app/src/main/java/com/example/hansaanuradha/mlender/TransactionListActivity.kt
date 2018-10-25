@@ -32,6 +32,7 @@ class TransactionListActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         val query : Query = db?.collection("transactions")!!
                 .whereEqualTo("from", fullName)
+                .whereEqualTo("completed", false)
                 .orderBy("startDate", Query.Direction.DESCENDING)
 
         val options : FirestoreRecyclerOptions<Transaction> = FirestoreRecyclerOptions.Builder<Transaction>()

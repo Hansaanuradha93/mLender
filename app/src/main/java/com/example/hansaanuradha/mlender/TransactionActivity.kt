@@ -10,26 +10,40 @@ import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.DocumentReference
 import android.app.ProgressDialog
+import android.graphics.Color
+import android.view.KeyEvent
 import android.widget.Toast
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.android.synthetic.main.activity_customer_update.*
 import kotlinx.android.synthetic.main.activity_transaction.*
+import kotlinx.android.synthetic.main.activity_transaction_details.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.KeyEvent.KEYCODE_DPAD_CENTER
+
+
 
 
 @Suppress("NAME_SHADOWING")
 class TransactionActivity : AppCompatActivity() {
 
+    // Log Messages Key
+    private val TRANSCACTION_ACTIVITY_KEY = "transaction_activity_key"
+
     // Firestore Reference
-    var db : FirebaseFirestore ?= null
-    var customerReference : DocumentReference ?= null
-    var transactionRef : CollectionReference ?= null
+    private var db : FirebaseFirestore ?= null
+    private var customerReference : DocumentReference ?= null
+    private var transactionRef : CollectionReference ?= null
 
     // Progress Bar
     private var dialog: ProgressDialog? = null
 
     // Fields
-    var isStartDate : Boolean = false
+    private var isStartDate : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +55,81 @@ class TransactionActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         dialog = ProgressDialog(this)
+
+        // Check customer availability
+        lastNameEditText.setOnKeyListener(View.OnKeyListener { view, i, keyEvent ->
+
+            when (i) {
+                KeyEvent.KEYCODE_ENTER -> {
+                    val customerCollectionReference = db?.collection("customers")
+
+                    customerCollectionReference
+                            ?.whereEqualTo("fname", firstNameEditText.text.toString().toLowerCase())
+                            ?.whereEqualTo("lname", lastNameEditText.text.toString().toLowerCase())
+                            ?.get()
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    for (document in task.result) {
+                                        Log.d("result", document.id + " => " + document.data)
+
+                                        var addressNumber = document.get("addressNo").toString()
+                                        var street = document.get("street").toString()
+                                        var city= document.get("city").toString()
+                                        var state = document.get("state").toString()
+                                        var contactNumber = document.get("contactNumber").toString()
+
+                                        // Display Customer Details
+                                        addressNoEditText.setText(addressNumber)
+                                        streetEditText.setText(street)
+                                        cityEditText.setText(city)
+                                        stateEditText.setText(state)
+                                        contactNumberEditText.setText(contactNumber)
+
+                                    }
+                                } else {
+                                    Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
+                                }
+                            }
+                    Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
+                    true
+                }
+                else -> {
+                }
+            }
+            val customerCollectionReference = db?.collection("customers")
+
+            customerCollectionReference
+                    ?.whereEqualTo("fname", firstNameEditText.text.toString())
+                    ?.whereEqualTo("lname", lastNameEditText.text.toString())
+                    ?.get()
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            for (document in task.result) {
+                                Log.d("result", document.id + " => " + document.data)
+
+                                var documentId = document.id
+                                var addressNumber = document.get("addressNo").toString()
+                                var street = document.get("street").toString()
+                                var city= document.get("city").toString()
+                                var state = document.get("state").toString()
+                                var contactNumber = document.get("contactNumber").toString()
+
+                                // Display Customer Details
+                                addressNoEditText.setText(addressNumber)
+                                streetEditText.setText(street)
+                                cityEditText.setText(city)
+                                stateEditText.setText(state)
+                                contactNumberEditText.setText(contactNumber)
+
+                            }
+                        } else {
+                            Log.d(TRANSCACTION_ACTIVITY_KEY, "Error getting documents: ", task.exception)
+                        }
+                    }
+            Log.i(TRANSCACTION_ACTIVITY_KEY, "hey")
+            true
+        })
+
 
 
     }
@@ -81,8 +170,9 @@ class TransactionActivity : AppCompatActivity() {
                     dialog?.setMessage("Saving Transaction, please wait.")
                     dialog?.show()
 
-                    val fName = firstNameEditText.text.toString()
-                    val lName = lastNameEditText.text.toString()
+                    val fName = firstNameEditText.text.toString().toLowerCase()
+                    val lName = lastNameEditText.text.toString().toLowerCase()
+
 
                     // Save Customer to Db
                     addCustomer(fName, lName)
@@ -100,17 +190,19 @@ class TransactionActivity : AppCompatActivity() {
 
         // Customer Details
         val fullName = "$fName $lName"
-        val addressNumber = addressNoEditText.text.toString()
-        val street = streetEditText.text.toString()
-        val city = cityEditText.text.toString()
-        val state = stateEditText.text.toString()
+        val addressNumber = addressNoEditText.text.toString().toLowerCase()
+        val street = streetEditText.text.toString().toLowerCase()
+        val city = cityEditText.text.toString().toLowerCase()
+        val state = stateEditText.text.toString().toLowerCase()
         val contactNumber = contactNumberEditText.text.toString()
+
+        var numberOfTransactions : Int?= 1
+        customerReference = db?.collection("customers")?.document(fullName)
 
 
         val customer : Customer = Customer(fName, lName, addressNumber, street, city, state,
                 contactNumber)
 
-        customerReference = db?.collection("customers")?.document(fullName)
 
         // Add Customer to db
         customerReference
